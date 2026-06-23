@@ -1,0 +1,6 @@
+{
+"indian" :  {"Item 1": 240,"Item 2": 260,"Item 3": 170,"Item 4": 235},
+"mexican": {"Item 1": 180,"Item 2": 225,"Item 3": 270,"Item 4": 205,"Item 5": 207},
+"italian": {"Item 1": 280,"Item 2": 340,"Item 3": 295,"Item 4": 315},
+"chinese": {"Item 1": 340,"Item 2": 275}
+}
