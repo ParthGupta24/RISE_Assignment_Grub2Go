@@ -1,13 +1,14 @@
 import streamlit as st
 import datetime
 
+#Read Menu_Card.json to extract Menu details managed by the Restaurant Owner.
 with open("Menu_Card.json", 'r') as fr:
     cuisines = eval(fr.read())
 
-gst = 5
+gst = 5         #Assumed GST of 5 percent as per Indian Standard for food items. Can be changed to 18 if desired by program owner.
 
+#Streamlit page
 st.set_page_config(page_title='Demo App', layout='centered')
-
 st.title('Grub 2 Go')
 
 user_panel = st.sidebar
@@ -17,6 +18,7 @@ age = form.number_input("Age : ", key='age', min_value=0, value=18)
 dob = form.date_input("Date of Birth : ", value='today', min_value=datetime.date(year=1970, month=1, day=1))
 city = form.text_input("City", key='city')
 
+#Validation scheme for Form
 def validate():
     if not name:
         form.error("Please enter your name")
@@ -26,6 +28,7 @@ menu = st.expander('Menu Card')
 categories = user_panel.expander("Select your favourite cuisines")
 all = categories.checkbox("All", key='all')
 
+#Cuisine Selection pane
 if all:
     cuisine_labels = dict()
     for i in cuisines.keys():
@@ -35,18 +38,18 @@ else:
     for i in cuisines.keys():
         cuisine_labels.update({i:categories.checkbox(str(i).capitalize())})
 
-class item:
+class item:             #Handles each Item in a given cuisine
     def __init__(self, menu, item_name, price, menu_name):
-        self.menu = menu
+        self.menu = menu        #Streamlit Expander Object. Corresponds to parent cuisine
         self.col1, self.col2, self.col3 = menu.columns(3)
         self.item = item_name
         self.price = price
         self.col1.write(str(item_name))
         self.col2.write("Rs "+str(price))
         self.qty = self.col3.number_input("Qty", min_value=0, value=0, key=str(menu_name) + str(item_name))
-class Menu:
+class Menu:             #Handles a given cuisine and manages component items
     def __init__(self, cuisine, items, cuisine_name):
-        self.cuisine = cuisine
+        self.cuisine = cuisine  #Streamlit Expander object.
         self.items = [item(cuisine, key, value, cuisine_name) for key, value in items.items()]
         self.total = 0
         for i in self.items:
@@ -55,6 +58,7 @@ class Menu:
 
 total = 0
 menu_card = dict()
+#Cuisine visibility logic
 for i in cuisine_labels.keys():
     if cuisine_labels[i]:
         csn = menu.expander(str(i).capitalize()+' Cuisine')
@@ -62,6 +66,7 @@ for i in cuisine_labels.keys():
         total += catalog.total
         menu_card.update({i:{'csn':csn, 'catalog':catalog}})
 
+#Billing logic
 if total != 0:
     bill = st.expander("Billing - Order summary:")
     for i in cuisine_labels.keys():
