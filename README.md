@@ -9,7 +9,7 @@ This is a simple Food Ordering Application made using Streamlit - Python.<br><br
 
 ### Deliverables:<br>
 - app.py: Handles the order logic, validates user fields<br>
-- Menu.json: Allows the application owner to edit the menu card without altering the code. Must be in JSON format.<br><br>
+- Menu_Card.json: Allows the application owner to edit the menu card without altering the code. Must be in JSON format.<br><br>
 
 ### Usage:<br>
 1. Enter the working directory of this Project in your terminal/Command prompt. Current working directory can be seen as the file path in terminal prompt.<br>
